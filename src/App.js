@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Counter from './components/Counter';
 
-function App() {
-  return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    counter: 0
+  };
+  inc = () => {
+    this.setState({ counter: this.state.counter + 1 });
+  };
+  dec = () => {
+    this.setState({ counter: this.state.counter - 1 });
+  };
+  render() {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-around'
+        }}
+      >
+        <button onClick={this.inc}>+</button>
+        <Counter counter={this.state.counter} />
+        <button onClick={this.dec}>-</button>
+      </div>
+    );
+  }
 }
 
 export default App;
