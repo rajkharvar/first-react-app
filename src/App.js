@@ -1,29 +1,33 @@
 import React, { Component } from 'react';
-import Counter from './components/Counter';
+import Counter from './components/Counter.jsx';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+
+const initState = {
+  counter: 0
+};
+
+const reducer = (state = initState, action) => {
+  switch (action.type) {
+    case 'INC': {
+      return { counter: state.counter + 1 };
+    }
+    case 'DEC': {
+      return { counter: state.counter - 1 };
+    }
+    default:
+      return state;
+  }
+};
+
+const store = createStore(reducer);
 
 class App extends Component {
-  state = {
-    counter: 0
-  };
-  inc = () => {
-    this.setState({ counter: this.state.counter + 1 });
-  };
-  dec = () => {
-    this.setState({ counter: this.state.counter - 1 });
-  };
   render() {
     return (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around'
-        }}
-      >
-        <button onClick={this.inc}>+</button>
-        <Counter counter={this.state.counter} />
-        <button onClick={this.dec}>-</button>
-      </div>
+      <Provider store={store}>
+        <Counter />
+      </Provider>
     );
   }
 }
