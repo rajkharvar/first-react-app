@@ -13,11 +13,7 @@ class Users extends Component {
         }}
       >
         <button onClick={() => this.props.fetchUsers()}>Fetch users</button>
-        {this.props.data.fetching && (
-          <h4>
-            {this.props.data.fetching ? 'Fetching users please wait' : ''}
-          </h4>
-        )}
+        {this.props.data.fetching && <h4>Fetching users please wait</h4>}
         {this.props.data.users &&
           this.props.data.users.map(user => {
             return (
@@ -28,6 +24,9 @@ class Users extends Component {
               </div>
             );
           })}
+        {this.props.data.fetched && (
+          <button onClick={() => this.props.removeUsers()}>Remove Users</button>
+        )}
       </div>
     );
   }
@@ -59,6 +58,11 @@ function mapDispatchToProps(dispatch) {
             payload: err
           });
         });
+    },
+    removeUsers: () => {
+      dispatch({
+        type: 'REMOVE_USERS'
+      });
     }
   };
 }

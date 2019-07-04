@@ -9,7 +9,7 @@ import logger from 'redux-logger';
 const initState = {
   counter: 0,
   fetching: false,
-  fetched: true,
+  fetched: false,
   users: [],
   error: null
 };
@@ -33,9 +33,11 @@ const reducer = (state = initState, action) => {
         users: action.payload
       };
     }
-
     case 'FETCH_ERROR': {
       return { ...state, error: action.payload };
+    }
+    case 'REMOVE_USERS': {
+      return { ...state, users: [], fetched: false };
     }
     default:
       return state;
