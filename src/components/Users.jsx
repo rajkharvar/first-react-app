@@ -1,0 +1,69 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import axios from 'axios';
+
+class Users extends Component {
+  render() {
+    return (
+      <div
+        style={{
+          backgroundColor: '#999',
+          display: 'flex',
+          flexDirection: 'column'
+        }}
+      >
+        <button onClick={() => this.props.fetchUsers()}>Fetch users</button>
+        {this.props.data.fetching && (
+          <h4>
+            {this.props.data.fetching ? 'Fetching users please wait' : ''}
+          </h4>
+        )}
+        {this.props.data.users &&
+          this.props.data.users.map(user => {
+            return (
+              <div key={user.id}>
+                <h3>Name: {user.name}</h3>
+                <h4>Username: {user.username}</h4>
+                <p>Email: {user.email}</p>
+              </div>
+            );
+          })}
+      </div>
+    );
+  }
+}
+
+function mapStateToProps(state) {
+  return {
+    data: state
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    fetchUsers: () => {
+      dispatch({
+        type: 'FETCH_USERS_START'
+      });
+      axios
+        .get('https://jsonplaceholder.typicode.com/users')
+        .then(response => {
+          dispatch({
+            type: 'RECEIVE_USERS',
+            payload: response.data
+          });
+        })
+        .catch(err => {
+          dispatch({
+            type: 'FETCH_ERROR',
+            payload: err
+          });
+        });
+    }
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Users);
