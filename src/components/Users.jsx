@@ -27,6 +27,7 @@ class Users extends Component {
         {this.props.data.fetched && (
           <button onClick={() => this.props.removeUsers()}>Remove Users</button>
         )}
+        {this.props.data.error && <h4>Something went wrong</h4>}
       </div>
     );
   }
