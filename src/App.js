@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import Counter from './components/Counter.jsx';
 import Users from './components/Users.jsx';
+import Todo from './components/Todo';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -12,7 +13,8 @@ const initState = {
   fetching: false,
   fetched: false,
   users: [],
-  error: null
+  error: null,
+  todos: [{ id: 1, todo: 'Learn redux' }]
 };
 
 const reducer = (state = initState, action) => {
@@ -39,6 +41,21 @@ const reducer = (state = initState, action) => {
     }
     case 'REMOVE_USERS': {
       return { ...state, users: [], fetched: false };
+    }
+    case 'ADD_TODO': {
+      let newState = { ...state };
+      newState.todos.push(action.payload);
+      return newState;
+    }
+    case 'REMOVE_TODO': {
+      let newState = { ...state };
+      return newState.todos.filter(todo => {
+        if (todo.id !== action.payload) {
+          return todo;
+        }
+      });
+      console.log(newState);
+      return newState;
     }
     default:
       return state;
@@ -80,9 +97,18 @@ class App extends Component {
                 Users
               </Link>
             </li>
+            <li>
+              <Link
+                style={{ textDecoration: 'none', color: '#444' }}
+                to='/todo'
+              >
+                Todo
+              </Link>
+            </li>
           </ul>
           <Route path='/counter' component={Counter} />
           <Route path='/users' component={Users} />
+          <Route path='/todo' component={Todo} />
         </Router>
       </Provider>
     );
