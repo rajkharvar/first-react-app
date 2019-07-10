@@ -46,9 +46,9 @@ class Todo extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
+  console.log(state.todoReducer.todos);
   return {
-    todos: state.todos
+    todos: state.todoReducer.todos
   };
 }
 

@@ -14,8 +14,8 @@ class Users extends Component {
       >
         <button onClick={() => this.props.fetchUsers()}>Fetch users</button>
         {this.props.data.fetching && <h4>Fetching users please wait</h4>}
-        {this.props.data.users &&
-          this.props.data.users.map(user => {
+        {this.props.data &&
+          this.props.data.map(user => {
             return (
               <div key={user.id}>
                 <h3>Name: {user.name}</h3>
@@ -34,8 +34,9 @@ class Users extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log(state.usersReducer.users);
   return {
-    data: state
+    data: state.usersReducer.users
   };
 }
 
