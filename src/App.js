@@ -14,7 +14,7 @@ const initState = {
   fetched: false,
   users: [],
   error: null,
-  todos: [{ id: 1, todo: 'Learn redux' }]
+  todos: [{ id: 1, todo: 'Learn redux' }, { id: 2, todo: 'Learn react-router' }]
 };
 
 const reducer = (state = initState, action) => {
@@ -48,14 +48,10 @@ const reducer = (state = initState, action) => {
       return newState;
     }
     case 'REMOVE_TODO': {
-      let newState = { ...state };
-      return newState.todos.filter(todo => {
-        if (todo.id !== action.payload) {
-          return todo;
-        }
-      });
-      console.log(newState);
-      return newState;
+      const filteredState = state.todos.filter(
+        todo => todo.id !== action.payload
+      );
+      return { ...state, todos: filteredState };
     }
     default:
       return state;

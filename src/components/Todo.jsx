@@ -34,7 +34,11 @@ class Todo extends Component {
           })}
         <form action='submit' onSubmit={this.handleSubmit}>
           <label htmlFor='todo'>Todo</label>
-          <input type='text' onChange={this.handleChange} />
+          <input
+            type='text'
+            onChange={this.handleChange}
+            value={this.state.todo}
+          />
         </form>
       </div>
     );
