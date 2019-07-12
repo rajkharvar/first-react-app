@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { ThemeContext } from '../context/ThemeContext';
 
 class Counter extends Component {
+  static context = ThemeContext;
   render() {
+    // const { isDarkTheme, light, dark } = this.context;
+    console.log(this.context);
+    // const theme = isDarkTheme ? dark : light;
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-around'
+          // backgroundColor: theme.bg,
+          // color: theme.text
+        }}
+      >
         <button type='button' onClick={() => this.props.inc()}>
           +
         </button>
